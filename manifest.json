@@ -1,0 +1,20 @@
+{
+  "name": "Roleplay token generator",
+  "action": {},
+  "manifest_version": 3,
+  "version": "1",
+  "description": "Generates a roleplay token from an image",
+  "permissions": [
+    "activeTab", 
+    "scripting", 
+    "contextMenus",
+    "downloads"
+  ],
+  "background": {
+    "service_worker": "worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "128": "app/assets/icon.png"
+  }
+}
