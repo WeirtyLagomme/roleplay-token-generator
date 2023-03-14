@@ -1,5 +1,7 @@
+import { download } from "./download-manager.js";
+
 const nameFile = () => new Promise(resolve => {
-    document.querySelector('section').classList.add('show');
+    document.querySelector('section.filename').classList.add('show');
     const input = document.querySelector('input');
     input.focus();
     input.addEventListener('keydown', e => {
@@ -10,14 +12,12 @@ const nameFile = () => new Promise(resolve => {
     })
 });
 
-const downloadChanged = (delta) => {
-    if (delta.state && delta.state.current === "complete") {
-        chrome.downloads.onChanged.removeListener(downloadChanged);
-        chrome.runtime.sendMessage({ close: true });
-    }
+const pushTokenHistory = token => {
+    const history = JSON.parse(localStorage.getItem('token-history')) || [];
+    localStorage.setItem('token-history', JSON.stringify([ token, ...history ]));
 }
 
-const download = async ({ stage }) => {
+const save = async ({ stage }) => {
     const filename = await nameFile();
 
     const imageURL = stage.toDataURL({
@@ -27,12 +27,8 @@ const download = async ({ stage }) => {
         height: 256
     });
 
-    chrome.downloads.onChanged.addListener(downloadChanged);
-
-    chrome.downloads.download({
-        url: imageURL,
-        filename: `${filename}.png`
-    });
+    pushTokenHistory({ imageURL, filename });
+    download({ url: imageURL, filename });  
 }
 
 const hideContext = ({ transformer, group }) => {
@@ -56,7 +52,7 @@ export const setupSaver = canvas => {
         if (e.ctrlKey && e.key === 's') {
             e.preventDefault();
             hideContext(canvas);
-            download(canvas);
+            save(canvas);
         }
     });
 }

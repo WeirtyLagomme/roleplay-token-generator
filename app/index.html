@@ -7,14 +7,42 @@
     <title>Roleplay Token Generator</title>
   </head>
   <body>
+    <div class="loader">
+      <div class="loader-container">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      </div>
+    </div>
+    <header>
+      <div class="title">
+        <img src="assets/logo.png">
+        <p>Roleplay Token Generator</p>
+      </div>
+      <div class="shortcuts">
+        <div class="shortcut">
+          <p>Tokens history :</p>
+          <div class="button">CTRL + H</div>
+        </div>
+        <div class="shortcut">
+          <p>When you're done :</p>
+          <div class="button">CTRL + S</div>
+        </div>
+      </div>
+    </header>
     <aside>
-      <p class="save">Roleplay Token Generator</p>
+      <div class="borders"></div>
     </aside>
     <main>
       <div id="container"></div>
     </main>
-    <section>
+    <section class="filename">
       <input type="text" class="filename" placeholder="Token name">
+    </section>
+    <section class="history">
+      <div class="back">
+        <img src="assets/back-arrow.png">
+        <p>Esc</p>
+      </div>
+      <div class="history-container"></div>
     </section>
   </body>
 </html>
